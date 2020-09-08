@@ -1,0 +1,14 @@
+#!/bin/bash
+set -eu
+
+BASE_TAG=${DOCKER_TAG%_*}
+SOURCERY_LITE_VERSION=${DOCKER_TAG##*_}
+
+if [ -z "${DOCKERFILE_PATH+UNDEF}" ]; then
+    DOCKERFILE_PATH_ARG=""
+else
+    DOCKERFILE_PATH_ARG="-f $DOCKERFILE_PATH"
+fi
+
+docker build --build-arg BASE_IMAGE=docker.io/pizzafactory0contorno/linux-kernel-build:$BASE_TAG --build-arg SOURCERY_LITE_VERSION=${SOURCERY_LITE_VERSION}  ${DOCKERFILE_PATH_ARG} -t $IMAGE_NAME .
+
