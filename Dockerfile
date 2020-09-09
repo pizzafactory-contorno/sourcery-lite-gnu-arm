@@ -13,6 +13,7 @@ FROM ${BASE_IMAGE}
 ARG SOURCERY_LITE_VERSION=2011.03-42
 
 USER root
+RUN apt-get update && apt-get install -y lib32z1 lib32stdc++6 && rm -fr /var/lib/apt/lists/*
 COPY --from=download /opt/sourcery/${SOURCERY_LITE_VERSION}/ /opt/sourcery/${SOURCERY_LITE_VERSION}/
 USER user
 ENV PATH ${PATH}:/opt/sourcery/${SOURCERY_LITE_VERSION}
